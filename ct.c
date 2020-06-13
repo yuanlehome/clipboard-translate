@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <linux/input.h>
-//#include <sys/types.h>
-//#include <sys/stat.h>
 #include <fcntl.h>
 
 int main(void)
@@ -18,14 +16,18 @@ int main(void)
     }
     while(1)
     {
-        read(keys_fd, &t, sizeof(struct input_event));
-        if(t.type == 1)
+        read(keys_fd, &t, sizeof(t));
+        if(t.type == EV_KEY)
 		{
-			if(t.value == 0)
-				system("~/Translator/goTranslate.sh");
+			if(t.code == BTN_LEFT)
+			{
+				if(t.value == MSC_SERIAL)
+				{
+					system("~/Translator/goTranslate");
+				}
+			}
 		}
     }
     close(keys_fd);
     return 0;
 }
-
