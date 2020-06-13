@@ -28,7 +28,7 @@ Linux平台划词翻译工具实现
 
 下面有动图进行演示。
 
-![](https://github.com/yuanlehome/clipboard-translate/blob/master/iKnVA63lpy.gif)
+![gg](https://github.com/yuanlehome/clipboard-translate/blob/master/iKnVA63lpy.gif)
 
 本人所使用的环境是运行在 *VMware* 虚拟机下的 *Linux* 发行版 *Ubuntu 18.04.3 LTS* ，因此这里介绍的步骤可能与其他 *Linux* 发行版中的实现略有不同。下面就来一步一步的实现它吧。
 
