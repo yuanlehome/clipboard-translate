@@ -98,10 +98,10 @@ $ sudo cat /dev/input/event2 | hexdump # 测试时改变数字即可
 ```c
 // 结构体定义见 input.h
 struct input_event { 
-  struct timeval time; // 按键时间 
-  __u16 type; // 事件类型 
-  __u16 code; // 要模拟成什么按键 
-  __s32 value; // 是按下还是释放 
+    struct timeval time; // 按键时间 
+    __u16 type; // 事件类型 
+    __u16 code; // 要模拟成什么按键 
+    __s32 value; // 是按下还是释放 
 }; 
 
 // 下面宏定义见 input-event-coses.h
