@@ -159,7 +159,7 @@ int main(void)
             if(t.code == BTN_LEFT) // 鼠标左键
                 if(t.value == MSC_SERIAL) // 松开
                     // 调用外部shell脚本
-                        system("~/Translator/goTranslate.sh");
+                    system("~/Translator/goTranslate.sh");
     }
     close(keys_fd);
     return 0;
