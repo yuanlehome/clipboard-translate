@@ -154,12 +154,12 @@ int main(void)
     
     while(1)
     {
-		read(keys_fd, &t, sizeof(t));
-		if(t.type == EV_KEY) // 有键按下
-			if(t.code == BTN_LEFT) // 鼠标左键
-				if(t.value == MSC_SERIAL) // 松开
-					// 调用外部shell脚本
-					system("~/Translator/goTranslate.sh");
+        read(keys_fd, &t, sizeof(t));
+        if(t.type == EV_KEY) // 有键按下
+            if(t.code == BTN_LEFT) // 鼠标左键
+                if(t.value == MSC_SERIAL) // 松开
+                    // 调用外部shell脚本
+                        system("~/Translator/goTranslate.sh");
     }
     close(keys_fd);
     return 0;
