@@ -119,7 +119,7 @@ struct input_event {
 
 // value
 #define MSC_SERIAL		0x00
-#define MSC_PULSELED	0x01
+#define MSC_PULSELED		0x01
 // ...
 ```
 
