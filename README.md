@@ -154,11 +154,11 @@ int main(void)
     
     while(1)
     {
-        read(keys_fd, &t, sizeof(t));
-        if(t.type == EV_KEY) // 有键按下
-            if(t.code == BTN_LEFT) // 鼠标左键
+		read(keys_fd, &t, sizeof(t));
+		if(t.type == EV_KEY) // 有键按下
+			if(t.code == BTN_LEFT) // 鼠标左键
 				if(t.value == MSC_SERIAL) // 松开
-                    // 调用外部shell脚本
+					// 调用外部shell脚本
 					system("~/Translator/goTranslate.sh");
     }
     close(keys_fd);
@@ -185,12 +185,12 @@ if [[ "$str_new" != "$str_old" && $str_new ]]; then
 	echo -e "\n"
 	count=$(echo "$str_new" | wc -w)
 	if [ "$count" == "1" ]; then
-        echo -n -e "$str_new " >> ~/Translator/words
+		echo -n -e "$str_new " >> ~/Translator/words
 		echo "$str_new" | trans :zh-CN | tail -1 | cut -c 5- | sed "s,\x1b\[[0-9;]*[a-zA-Z],,g" | tee -a ~/Translator/words
 	else
 		echo "$str_new" | trans :zh-CN -b
 	fi
-    echo "$str_new" > ~/Translator/lastContent
+	echo "$str_new" > ~/Translator/lastContent
 fi
 ```
 
