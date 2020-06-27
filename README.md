@@ -1,15 +1,8 @@
-# clipboard-translate
-Linux平台划词翻译工具实现
-
----
-
 ---
 
 欢迎分享，转载务必注明来源！
 
-(https://yuanlehome.github.io/20200602/)
-
----
+(https://yuanlehome.github.io/20200612/)
 
 ---
 
@@ -28,7 +21,7 @@ Linux平台划词翻译工具实现
 
 下面有动图进行演示。
 
-![gg](https://github.com/yuanlehome/clipboard-translate/blob/master/iKnVA63lpy.gif)
+![](iKnVA63lpy.gif)
 
 本人所使用的环境是运行在 *VMware* 虚拟机下的 *Linux* 发行版 *Ubuntu 18.04.3 LTS* ，因此这里介绍的步骤可能与其他 *Linux* 发行版中的实现略有不同。下面就来一步一步的实现它吧。
 
@@ -163,7 +156,7 @@ int main(void)
     {
         read(keys_fd, &t, sizeof(t));
         if(t.type == EV_KEY) // 有键按下
-            if(t.code == BIN_LEFT) // 鼠标左键
+            if(t.code == BTN_LEFT) // 鼠标左键
 				if(t.value == MSC_SERIAL) // 松开
                     // 调用外部shell脚本
 					system("~/Translator/goTranslate.sh");
@@ -186,13 +179,29 @@ $ gcc ct.c -o ct
 ```shell
 #!/bin/bash
 
-str_old=$(cat ~/Translator/lastContent.txt)
+str_old=$(cat ~/Translator/lastContent)
 str_new=$(xclip -o 2>/dev/null | xargs)
 if [[ "$str_new" != "$str_old" && $str_new ]]; then
 	echo -e "\n"
-	echo "$str_new" | xargs | trans :zh-CN -b
+	count=$(echo "$str_new" | wc -w)
+	if [ "$count" == "1" ]; then
+        echo -n -e "$str_new " >> ~/Translator/words
+		echo "$str_new" | trans :zh-CN | tail -1 | cut -c 5- | sed "s,\x1b\[[0-9;]*[a-zA-Z],,g" | tee -a ~/Translator/words
+	else
+		echo "$str_new" | trans :zh-CN -b
+	fi
+    echo "$str_new" > ~/Translator/lastContent
+    
+    # 打印分割线
+    col=$(cat ~/Translator/TerminalCOLUMNS)
+	echo -e -n "\n"
+	n=1
+	while [ $n -le $col ]
+	do
+		echo -n "="
+		n=$(( n + 1 ))
+	done
 fi
-echo "$str_new" | xargs > ~/Translator/lastContent.txt
 ```
 
 原理非常简单，读者自行了解。这里我们还要在 *Translator* 里建立一个 *lastContent.txt* 文件作为缓存，目的是本次调用脚本时能够获取上一次调用时翻译的文本内容，如果和本次调用的翻译文本一样，则本次就不进行翻译。
@@ -225,6 +234,7 @@ $ ct
 
 值得说明的是，由于本人完全是为了方便自己的使用，而且在搞出这么个工具时仅仅接触 *Linux* 系统才不到两周，所以里面的实现对于有经验的朋友来说略显的有些笨拙了，请理解哈。
 
+个人觉得这个工具使用起来还是很方便的，你觉得呢？
 
 
 
